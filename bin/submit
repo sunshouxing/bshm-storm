@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+#
+# submit -- submit topology to storm docker cluster.
+#
+# Usage: submit.sh
+#
+
+# set -xv
+
+readonly STORM_VERSION=1.1.1
+readonly BASE_DIR=$(readlink -f "$(dirname $0)/..")
+readonly FLUX_CONF_DIR="${BASE_DIR}/src/main/resources/flux/"
+
+#
+# echo given content with red color
+#
+print() {
+  echo -e "\033[31m${1}\033[0m"
+}
+
+#
+# package the project with mvn
+#
+package() {
+    cd ${BASE_DIR}
+    mvn clean package && return 0 || return 1
+}
+
+print "============================================================"
+print "Please select the flux config yaml:"
+print "============================================================"
+select config in $(cd "${FLUX_CONF_DIR}"; echo *.yaml)
+do
+    break;
+done
+print "You selected ${config}.\n"
+
+print "============================================================"
+print "Building the topology jar file..."
+print "============================================================"
+package \
+    && print "Finished building the topology jar file.\n" \
+    || { print "Failed to build the topolog jar file.\n"; exit 1; }
+
+print "============================================================"
+print "Submitting the topology to storm cluster..."
+print "============================================================"
+docker run -it --rm \
+    --net bshm_net \
+    --volume ${BASE_DIR}/target/storm-topo-1.0.0.jar:/topo.jar \
+    storm:${STORM_VERSION} \
+    storm jar /topo.jar org.apache.storm.flux.Flux -r -R /flux/${config}
+
+# EOF
