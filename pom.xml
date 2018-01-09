@@ -18,12 +18,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.apache.storm</groupId>
-  <artifactId>flux-examples</artifactId>
-  <version>1.1.1</version>
+  <groupId>com.new-vision.bshm</groupId>
+  <artifactId>storm-topo</artifactId>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>flux-examples</name>
+  <name>storm-topo</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -110,6 +110,9 @@
 
   <build>
     <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
       <resource>
         <directory>${basedir}/multilang</directory>
       </resource>

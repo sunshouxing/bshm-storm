@@ -47,13 +47,13 @@ bolts:
     parallelism: 1
     # ...
 
-  - id: "log"
-    className: "org.apache.storm.flux.wrappers.bolts.LogInfoBolt"
+  - id: "count"
+    className: "org.apache.storm.testing.TestWordCounter"
     parallelism: 1
     # ...
 
-  - id: "count"
-    className: "org.apache.storm.testing.TestWordCounter"
+  - id: "log"
+    className: "org.apache.storm.flux.wrappers.bolts.LogInfoBolt"
     parallelism: 1
     # ...
 
