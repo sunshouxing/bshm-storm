@@ -1,2 +1,5 @@
 dependency-reduced-pom.xml
 target/
+# idea-UI project settings
+.idea/
+*.iml
